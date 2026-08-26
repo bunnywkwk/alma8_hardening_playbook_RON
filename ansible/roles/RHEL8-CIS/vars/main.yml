@@ -1,0 +1,65 @@
+---
+# vars file for RHEL8-CIS
+
+min_ansible_version: 2.16.1
+rhel8cis_allowed_crypto_policies:
+  - 'DEFAULT'
+  - 'FUTURE'
+  - 'FIPS'
+
+# Following is left blank for ability to build string
+rhel8cis_crypto_policy_module: ''
+
+# variable built from rhel8cis_bootloader_password and rhel8cis_bootloader_salt or rhel8cis_bootloader_password_hash
+rhel8_compiled_bootloader_password: "{% if rhel8cis_bootloader_salt != '' %}{{ (rhel8cis_bootloader_password | grub_hash(salt=rhel8cis_bootloader_salt)) }}{% else %}{{ rhel8cis_bootloader_password_hash }}{% endif %}" # noqa template-instead-of-copy
+
+# Do not adjust these are recognized as part of the CIS benchmark and used during testing
+rhel8cis_allowed_crypto_policies_modules:
+  # Recognized by CIS as possible extra options
+  - 'OSPP'
+  - 'AD-SUPPORT'
+  - 'AD-SUPPORT-LEGACY'
+  # The following are already included in 1.6.x controls
+  - 'NO-SHA1'
+  - 'NO-SSHCBC'
+  - 'NO-SSHETM'
+  - 'NO-SSHWEAKCIPHER'
+  - 'NO-SSHWEAKMAC'
+  - 'NO-WEAKMAC'
+
+# Ability to change the default shell
+# Note this can change how some of the ansible.builtin.shell tasks work and may require adjustments to args.executable for those tasks
+# Used mainly for overriding to use a more POSIX compliant shell such as dash or ash when running in a container environment
+rhel8cis_shell_executable: /bin/bash
+
+# Setting default value
+rhel8cis_sysctl_update: false
+
+aide_packages:
+  - aide
+
+# Aide initiate command for new DB creation
+aide_initiate_command: /usr/sbin/aide --init
+auditd_binaries:
+  - /sbin/auditctl
+  - /sbin/aureport
+  - /sbin/ausearch
+  - /sbin/autrace
+  - /sbin/auditd
+  - /sbin/augenrules
+# default setting, this should not be changed
+# and is overridden if a task that changed sets the value if required.
+reboot_required: false
+
+rhel8cis_legacy_boot: false
+
+# Used to control warning summary
+warn_control_list: ""
+warn_count: 0
+
+company_title: 'MindPoint Group - A Tyto Athene Company'
+
+file_managed_by_ansible: |-
+  # File managed by ansible as part of {{ benchmark }} benchmark
+  # As part of Ansible-lockdown
+  # Provided by {{ company_title }}
