@@ -1,0 +1,59 @@
+---
+- name: Applying RHEL8 CIS Hardening - aeron
+  hosts: all
+  become: true
+
+  vars:
+  # first error encounter wherein the python for gathering facts is outdate
+
+
+  # just a banner assign to me
+    rhel8cis_warning_banner: "AIRNAV EXAM NODE - RON - AUTHORIZED USE ONLY"
+
+    # disable level 2 to apply level 1 on the hardening
+    rhel8cis_level_2: false
+
+    #enabling the goss audit
+    setup_audit: true
+    run_audit: true
+
+
+    rhel8cis_disruption_high: true
+
+    # not deleting the desktop gui i install
+    rhel8cis_desktop_required: true
+
+    # pam faillock
+    rhel8cis_rule_5_3_3_1_1: true
+    rhel8cis_rule_5_3_3_1_2: true
+    rhel8cis_rule_5_3_3_1_3: true
+
+    # second failed encounter i should modified the default profile
+    rhel8cis_authselect_custom_profile_name: aeron-profile
+
+
+  pre_tasks:
+    - name: Announce The run is started
+      ansible.builtin.debug:
+        msg: "The pre-task run is started"
+
+    - name: Check if the VM is real using a almalinux 8
+      ansible.builtin.assert:
+        that:
+          - ansible_distribution == "AlmaLinux"
+          - ansible_distribution_major_version == "8"
+        fail_msg: The system is not using almalinux 8
+        success_msg: The system using almalinux 8 OS
+
+    - name: To fully update the OS
+      ansible.builtin.command: dnf update -y
+      changed_when: false
+
+
+  post_tasks:
+    - name: Announce The run is finished
+      ansible.builtin.debug:
+        msg: "The run for hardening using rhel8-cis is done."
+
+  roles:
+    - RHEL8-CiS
