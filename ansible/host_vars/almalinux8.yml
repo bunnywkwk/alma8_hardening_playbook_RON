@@ -1,10 +1,4 @@
 ---
-# ==============================================================================
-# HOST VARIABLES (Host-Specific Configurations & Logical Bypasses)
-# ==============================================================================
-# This file contains overrides and bypasses specific to the almalinux8 VM instance.
-# These are logical choices made by the engineer (e.g., keeping the GUI, fixing 
-# upstream template bugs, and satisfying custom audit profiles).
 
 # Custom Authselect Profile
 rhel8cis_authselect_custom_profile_name: aeron-profile
