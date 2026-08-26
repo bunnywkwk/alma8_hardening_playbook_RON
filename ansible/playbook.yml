@@ -4,9 +4,6 @@
   become: true
 
   vars:
-  # first error encounter wherein the python for gathering facts is outdate
-
-
   # just a banner assign to me
     rhel8cis_warning_banner: "AIRNAV EXAM NODE - RON - AUTHORIZED USE ONLY"
 
