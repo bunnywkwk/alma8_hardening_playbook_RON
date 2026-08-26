@@ -31,6 +31,31 @@
     # second failed encounter i should modified the default profile
     rhel8cis_authselect_custom_profile_name: aeron-profile
 
+    # third error, i bypass the GPG key false alarm
+    rhel8cis_rule_1_2_1_1: false
+
+    # bypass selnux installation
+    rhel8cis_rule_1_3_1_1: false
+    rhel8cis_rule_1_3_1_3: false
+    rhel8cis_rule_1_3_1_4: false
+    rhel8cis_rule_1_3_1_5: false
+    rhel8cis_rule_1_3_1_7: false
+    rhel8cis_rule_1_3_1_8: false
+
+    # after multiple error, bypassing the selinux, cos its already enforece in
+    rhel8cis_rule_1_6_1: false
+    rhel8cis_rule_1_6_2: false
+    rhel8cis_rule_1_6_3: false
+    rhel8cis_rule_1_6_4: false
+
+    # Bypass the GDM Banner cos the template are not present to repo
+    rhel8cis_rule_1_8_1: false
+    rhel8cis_rule_1_8_2: false
+    rhel8cis_rule_1_8_3: false
+    rhel8cis_rule_1_8_4: false
+    rhel8cis_rule_1_8_5: false
+
+
 
   pre_tasks:
     - name: Announce The run is started
@@ -46,7 +71,7 @@
         success_msg: The system using almalinux 8 OS
 
     - name: To fully update the OS
-      ansible.builtin.command: dnf update -y
+      ansible.builtin.command: dnf update -y --disablerepo=epel
       changed_when: false
 
 
@@ -55,5 +80,7 @@
       ansible.builtin.debug:
         msg: "The run for hardening using rhel8-cis is done."
 
+
+
   roles:
-    - RHEL8-CiS
+    - RHEL8-CIS
