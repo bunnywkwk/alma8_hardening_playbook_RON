@@ -1,8 +1,0 @@
----
-
-rpm_packager:
-  - "packager@almalinux.org"
-# found on https://wiki.almalinux.org/cloud/Generic-cloud.html#download-and-verification note lower cas
-rpm_key:
-  - 3abb34f8
-  - ced7258b  # pragma: allowlist secret https://almalinux.org/blog/2023-12-20-almalinux-8-key-update/
